@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/tableLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="342dp" >
+
+    <!-- 2 columns -->
+    <TableRow
+        android:id="@+id/imageTableRow1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="5dip" >
+
+        <ImageView
+            android:id="@+id/image1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            />
+        <ImageView
+            android:id="@+id/image2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/imageTableRow2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="5dip" >
+
+        <ImageView
+            android:id="@+id/image3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+        <ImageView
+            android:id="@+id/image4"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+    </TableRow>
+
+    </TableLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="33dp"
+        android:text="@string/score"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="33dp"
+        android:text="@string/completed"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_gravity="center"
+        android:text="@string/hint"
+        android:onClick="showHint"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_gravity="center"
+        android:text="@string/about"
+        android:onClick="showAbout"/>
+
+
+
+</LinearLayout>
