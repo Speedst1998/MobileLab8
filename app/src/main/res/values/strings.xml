@@ -1,3 +1,18 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">Driving Quiz</string>
+    <string name="intro"> Welcome to drivers Quiz</string>
+    <string name="start">Start</string>
+    <string name="generalQuery">Which image matches</string>
+    <string name="score">Your score is</string>
+    <string name="completed">You have completed this many questions</string>
+    <string name="about">About</string>
+    <string name="hint">Hint</string>
+    <string name="hint1"></string>
+    <string name="hint2"></string>
+    <string name="hint3"></string>
+    <string name="hint4"></string>
+    <string name="question1"></string>
+    <string name="question2"></string>
+    <string name="question3"></string>
+    <string name="question4"></string>
 </resources>
