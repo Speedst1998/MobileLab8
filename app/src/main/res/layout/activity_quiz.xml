@@ -4,53 +4,67 @@
     android:layout_height="match_parent">
 
 
-    <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <TableLayout
         android:id="@+id/tableLayout1"
         android:layout_width="match_parent"
-        android:layout_height="342dp" >
+        android:layout_height="342dp"
+        android:layout_gravity="center">
 
-    <!-- 2 columns -->
-    <TableRow
-        android:id="@+id/imageTableRow1"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="5dip" >
+        <!-- 2 columns -->
 
-        <ImageView
-            android:id="@+id/image1"
+        <TableRow
+            android:id="@+id/imageTableRow2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:padding="5dip">
 
-            />
-        <ImageView
-            android:id="@+id/image2"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-    </TableRow>
+            <ImageView
+                android:id="@+id/image3"
+                android:layout_weight="1"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center"
+                android:src="@drawable/question1image"/>
 
-    <TableRow
-        android:id="@+id/imageTableRow2"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="5dip" >
+            <ImageView
+                android:id="@+id/image4"
+                android:layout_width="150dp"
+                android:layout_weight="1"
+                android:layout_height="150dp"
+                android:layout_gravity="center"
+                android:src="@drawable/question2image"/>
+        </TableRow>
 
-        <ImageView
-            android:id="@+id/image3"
+        <TableRow
+            android:id="@+id/imageTableRow1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            />
-        <ImageView
-            android:id="@+id/image4"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            />
-    </TableRow>
+            android:padding="5dip">
+
+            <ImageView
+                android:id="@+id/image1"
+                android:layout_weight="1"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:src="@drawable/question3image"
+
+                />
+
+            <ImageView
+                android:id="@+id/image2"
+                android:layout_weight="1"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:src="@drawable/question4image"/>
+        </TableRow>
 
     </TableLayout>
+
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="33dp"
-        android:text="@string/score"/>
+        android:layout_height="wrap_content"
+        android:text="@string/score"
+        android:layout_weight="1.74" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="33dp"
