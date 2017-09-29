@@ -7,12 +7,12 @@
     <string name="completed">You have completed this many questions:</string>
     <string name="about">About</string>
     <string name="hint">Hint</string>
-    <string name="hint1"></string>
-    <string name="hint2"></string>
+    <string name="hint1">Road is not always in this condition</string>
+    <string name="hint2">Very dangerous on 1 direction streets</string>
     <string name="hint3"></string>
     <string name="hint4"></string>
-    <string name="question1"></string>
-    <string name="question2"></string>
+    <string name="question1">Road surface in certain areas may be slippery when wet</string>
+    <string name="question2">No U-turn</string>
     <string name="question3"></string>
     <string name="question4"></string>
 </resources>
