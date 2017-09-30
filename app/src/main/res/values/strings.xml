@@ -6,6 +6,7 @@
     <string name="score">Your score is</string>
     <string name="completed">You have completed this many questions:</string>
     <string name="about">About</string>
+    <string name="creators">Created by: Tahar and Keylen</string>
     <string name="hint">Hint</string>
     <string name="hint1">Road is not always in this condition</string>
     <string name="hint2">Very dangerous on 1 direction streets</string>
