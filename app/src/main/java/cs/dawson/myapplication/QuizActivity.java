@@ -36,11 +36,13 @@ public class QuizActivity extends AppCompatActivity {
         image3 = (ImageButton)findViewById(R.id.image3);
         image4 = (ImageButton)findViewById(R.id.image4);
 
+
         choices = new ArrayList<>();
         choices.add(image1);
         choices.add(image2);
         choices.add(image3);
         choices.add(image4);
+
         //Here i represent the images i need to set in an array
         imagesToSet = new ArrayList<String>();
         populateImageArray(imagesToSet);
@@ -50,11 +52,12 @@ public class QuizActivity extends AppCompatActivity {
         positions.add("2");
         positions.add("3");
         positions.add("4");
-
+        Log.d("Cycle","CREATE IN PROGRESS");
         //Here I randomly choose the question to display
         quiz = new Quiz(generateQuestions());
-        int questionNum = quiz.chooseQuestion();
 
+        int questionNum = quiz.chooseQuestion();
+        Log.d("Cycle","CREATE DONE");
 
 
     }
@@ -124,12 +127,14 @@ public class QuizActivity extends AppCompatActivity {
         //here I get the number of questions we have in the quiz
         //by counting the question pictures
         for(Field field : fields){
+            Log.d("chooseQuestion",numOfQuestions+"");
             if(field.getName().startsWith("question")){
+                Log.d("chooseQuestion","IF TRUE");
                 numOfQuestions++;
                 questions.add(numOfQuestions+"");
             }
         }
-        Log.d("chooseQuestion",numOfQuestions+"");
+
         return questions;
     }
 
