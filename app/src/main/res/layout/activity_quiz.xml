@@ -18,44 +18,57 @@
             android:layout_height="match_parent"
             android:padding="5dip">
 
-            <ImageView
-                android:id="@+id/image3"
+            <ImageButton
+                android:id="@+id/image1"
                 android:layout_weight="1"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:layout_gravity="center"
-                android:src="@drawable/question1image"/>
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true"
+                android:onClick="checkAnswer"
+                android:background="@drawable/question1image"/>
 
-            <ImageView
-                android:id="@+id/image4"
+            <ImageButton
+                android:id="@+id/image2"
                 android:layout_width="150dp"
                 android:layout_weight="1"
                 android:layout_height="150dp"
                 android:layout_gravity="center"
-                android:src="@drawable/question2image"/>
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true"
+                android:onClick="checkAnswer"
+                android:background="@drawable/question2image"/>
         </TableRow>
 
         <TableRow
             android:id="@+id/imageTableRow1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+
             android:padding="5dip">
 
-            <ImageView
-                android:id="@+id/image1"
+            <ImageButton
+                android:id="@+id/image3"
                 android:layout_weight="1"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
-                android:src="@drawable/question3image"
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true"
+                android:onClick="checkAnswer"
+                android:background="@drawable/question3image"
 
                 />
 
-            <ImageView
-                android:id="@+id/image2"
+            <ImageButton
+                android:id="@+id/image4"
                 android:layout_weight="1"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
-                android:src="@drawable/question4image"/>
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true"
+                android:onClick="checkAnswer"
+                android:background="@drawable/question4image"/>
         </TableRow>
 
     </TableLayout>
