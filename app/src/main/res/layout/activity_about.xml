@@ -11,18 +11,19 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/about"/>
+            android:padding="@dimen/about_introduction"
+            android:text="@string/instructions"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="@dimen/authors"
             android:text="@string/creators"/>
-
-
     </LinearLayout>
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:src="@drawable/about_image"/>
 
 </LinearLayout>

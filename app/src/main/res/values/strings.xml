@@ -6,6 +6,13 @@
     <string name="score">Your score is</string>
     <string name="completed">You have completed this many questions:</string>
     <string name="about">About</string>
+    <string name="instructions">Hello and welcome to our Drivers quiz!
+        To play, you must first press Start. A description, and
+        four road signs will be displayed. Based on the description, you must
+        choose the road sign that matches the description. You are given 2
+        tries to correctly guess each. If you are ever stuck on a question
+        you can always press the Hint button to get a hint.At the end, your
+        score will be displayed, and saved in our Hall Of Fame.</string>
     <string name="creators">Created by: Tahar and Keylen</string>
     <string name="hint">Hint</string>
     <string name="hint1">Road is not always in this condition</string>
