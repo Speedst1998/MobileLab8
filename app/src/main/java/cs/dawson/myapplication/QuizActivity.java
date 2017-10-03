@@ -79,39 +79,43 @@ public class QuizActivity extends AppCompatActivity {
         }
     }
     private void setImages(int question){
-        int pos = new Random().nextInt(quiz.getQuestions().size()) ;
+        int pos = new Random().nextInt(positions.size()) ;
         Log.d("Setting", "Position before setting in position array " + pos);
         positions.set(pos,"set");
         Log.d("Setting", "Position before setting in images to set array " + pos);
         imagesToSet.remove("question"+question+"image");
         Log.d("Setting", "Position " + pos);
         int imageId;
-        switch(pos+""){
+        switch(question+""){
             case "1":
                 imageId = getResources().getIdentifier("question"+question+"image", "drawable",
                         getPackageName());
+                Log.d("Setting", question+ " 1");
                 image1.setBackground(getDrawable(imageId));
                 break;
             case "2":
                 imageId = getResources().getIdentifier("question"+question+"image", "drawable",
                         getPackageName());
                 image2.setBackground(getDrawable(imageId));
+                Log.d("Setting", question+ " 2");
                 break;
             case "3":
                 imageId = getResources().getIdentifier("question"+question+"image", "drawable",
                         getPackageName());
                 image3.setBackground(getDrawable(imageId));
+                Log.d("Setting", question+ " 3");
                 break;
             case "4":
                 imageId = getResources().getIdentifier("question"+question+"image", "drawable",
                         getPackageName());
                 image4.setBackground(getDrawable(imageId));
+                Log.d("Setting", question+ " 4");
                 break;
         }
 
         for(String p : positions){
             if (!(p.equals("set"))) {
-                Log.d("Setting", " Other Position " + pos);
+                Log.d("Setting", " Other Position " + p);
                 //Select a random pic that has not been used for this question
                 int rndPic = new Random().nextInt(imagesToSet.size())  ;
                 //pull its name from the available images array
@@ -122,7 +126,7 @@ public class QuizActivity extends AppCompatActivity {
                 //this way I keep the code general instead of hardcoding the names of the images
                 imageId = getResources().getIdentifier(newPic, "drawable",
                         getPackageName());
-                choices.get(Integer.parseInt(p)).setBackground(getDrawable(imageId));
+                choices.get(Integer.parseInt(p)-1).setBackground(getDrawable(imageId));
             }
         }
 
