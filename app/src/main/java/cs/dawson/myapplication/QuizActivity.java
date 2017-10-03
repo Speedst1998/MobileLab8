@@ -13,6 +13,7 @@ import java.util.Random;
 /**
  * Created by 1534979 on 9/29/2017.
  */
+//TODO MAKE SURE RANDOM BOUDARIES ARE RIGHT
 
 public class QuizActivity extends AppCompatActivity {
 
@@ -22,7 +23,7 @@ public class QuizActivity extends AppCompatActivity {
     ImageButton image4;
     Quiz quiz;
     ArrayList<String> imagesToSet;
-    ArrayList<String> positions;
+    ArrayList<String> positions = new ArrayList<String>();
     ArrayList<ImageButton> choices;
 
     @Override
@@ -57,6 +58,7 @@ public class QuizActivity extends AppCompatActivity {
         quiz = new Quiz(generateQuestions());
 
         int questionNum = quiz.chooseQuestion();
+        setImages(questionNum);
         Log.d("Cycle","CREATE DONE");
 
 
@@ -67,18 +69,22 @@ public class QuizActivity extends AppCompatActivity {
 
         for (Field field : drawablesFields) {
             try {
-                Log.i("GETDRAWABLES", "R.drawable." + field.getName());
-                imagesToSet.add(field.getName());
+                if(field.getName().startsWith("question")) {
+                    Log.i("GETDRAWABLES", "R.drawable." + field.getName());
+                    imagesToSet.add(field.getName());
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
     }
     private void setImages(int question){
-        int pos = new Random().nextInt(quiz.getQuestions().size()) + 1;
+        int pos = new Random().nextInt(quiz.getQuestions().size()) ;
+        Log.d("Setting", "Position before setting in position array " + pos);
         positions.set(pos,"set");
+        Log.d("Setting", "Position before setting in images to set array " + pos);
         imagesToSet.remove("question"+question+"image");
-
+        Log.d("Setting", "Position " + pos);
         int imageId;
         switch(pos+""){
             case "1":
@@ -105,10 +111,13 @@ public class QuizActivity extends AppCompatActivity {
 
         for(String p : positions){
             if (!(p.equals("set"))) {
+                Log.d("Setting", " Other Position " + pos);
                 //Select a random pic that has not been used for this question
-                int rndPic = new Random().nextInt(imagesToSet.size()) + 1;
+                int rndPic = new Random().nextInt(imagesToSet.size())  ;
                 //pull its name from the available images array
                 String newPic = imagesToSet.get(rndPic);
+                imagesToSet.remove(newPic);
+                Log.d("Setting", " Image Position " + rndPic);
                 //this allows me to get the drawable by only using its name
                 //this way I keep the code general instead of hardcoding the names of the images
                 imageId = getResources().getIdentifier(newPic, "drawable",

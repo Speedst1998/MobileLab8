@@ -34,7 +34,7 @@ public class Quiz {
 
         while(notFound) {
 
-            questionNum = new Random().nextInt(this.questionNumbers.size()) + 1;
+            questionNum = new Random().nextInt(this.questionNumbers.size()- 1) + 1 ;
 
             if(!(questionNumbers.get(questionNum).equals("answered"))) {
                 notFound = false;
