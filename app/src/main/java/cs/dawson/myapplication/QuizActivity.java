@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -32,6 +33,7 @@ public class QuizActivity extends AppCompatActivity {
     TextView questionString;
     TextView score;
     TextView completed;
+    Button next;
     boolean secondTry = false;
 
     @Override
@@ -39,13 +41,16 @@ public class QuizActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
 
-        score = (TextView) findViewById(R.id.)
+        //image420dab
+        score = (TextView) findViewById(R.id.scoreNum);
+        completed = (TextView) findViewById(R.id.completeQuestions);
+        next = (Button) findViewById(R.id.nextButton);
         //get a handle on the image buttons
         image1 = (ImageButton)findViewById(R.id.image1);
         image2 = (ImageButton)findViewById(R.id.image2);
         image3 = (ImageButton)findViewById(R.id.image3);
         image4 = (ImageButton)findViewById(R.id.image4);
-image1.setBackgroundColor(0xFF0000F9);
+
 
         choices = new ArrayList<>();
         choices.add(image1);
@@ -70,6 +75,9 @@ image1.setBackgroundColor(0xFF0000F9);
 
     }
 
+    /**
+     * this method sets the next question page
+     */
     private void setNextQuestion(){
         int questionNum = quiz.chooseQuestion();
         int questionId = getResources().getIdentifier("question"+questionNum, "string",
@@ -77,6 +85,17 @@ image1.setBackgroundColor(0xFF0000F9);
         this.questionString.setText(getResources().getString(questionId));
         setImages(questionNum);
     }
+
+    /**
+     * this method is called when the next question button is clicked to set the next series of pictures
+     * and questions
+     * @param v
+     */
+    public void setNextQuestion(View v){
+        this.next.setVisibility(View.INVISIBLE);
+        setNextQuestion();
+    }
+
     private void populateImageArray(ArrayList<String> imagesToSet){
         Field[] drawablesFields = R.drawable.class.getFields();
 
@@ -91,6 +110,12 @@ image1.setBackgroundColor(0xFF0000F9);
             }
         }
     }
+
+    /**
+     * This method sets the pictures in their appropriate cells while making sure they are not repeated
+     * and setting right answer
+     * @param question
+     */
     private void setImages(int question){
         ArrayList<String> positions = new ArrayList<String>();
         positions.add("0");
@@ -103,6 +128,7 @@ image1.setBackgroundColor(0xFF0000F9);
         Log.d("Setting", "Position before setting in position array " + pos);
         positions.set(pos,"set");
         Log.d("Setting", "Position before setting in images to set array " + pos);
+        //remove image from array so its not reused
         imagesToSet.remove("question"+question+"image");
         Log.d("Setting", "Position " + pos);
         int imageId;
@@ -186,13 +212,19 @@ image1.setBackgroundColor(0xFF0000F9);
             Log.d("AnswerCheck", "Right answer");
             quiz.addPoint();;
             quiz.addToQuestionCounter();
+            this.completed.setText(getResources().getString(R.string.completed) +" "+ quiz.getQuestionCounter());
+            img.setBackgroundColor(0xFF0000F9);
+            this.next.setVisibility(View.VISIBLE);
+
         }
         else{
             if(secondTry) {
                 quiz.addToQuestionCounter();
                 this.secondTry = false;
                 img.setBackground(getDrawable(R.drawable.wrong));
-                setNextQuestion();
+                this.completed.setText(getResources().getString(R.string.completed) +" "+ quiz.getQuestionCounter());
+                choices.get(this.rightAnswerPos).setBackgroundColor(0xFF0000F9);
+                this.next.setVisibility(View.VISIBLE);
             }
             else{
                 img.setBackground(getDrawable(R.drawable.wrong));

@@ -6,6 +6,7 @@
     <string name="score">Your score is</string>
     <string name="completed">You have completed </string>
     <string name="total">out of</string>
+    <string name="next">Next question</string>
     <string name="about">About</string>
     <string name="instructions">Hello and welcome to our Drivers quiz!
         To play, you must first press Start. A description, and
