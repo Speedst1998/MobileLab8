@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Random;
@@ -25,21 +27,25 @@ public class QuizActivity extends AppCompatActivity {
     Quiz quiz;
     int rightAnswerPos =0;
     ArrayList<String> imagesToSet;
-    ArrayList<String> positions = new ArrayList<String>();
+
     ArrayList<ImageButton> choices;
     TextView questionString;
+    TextView score;
+    TextView completed;
+    boolean secondTry = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
 
+        score = (TextView) findViewById(R.id.)
         //get a handle on the image buttons
         image1 = (ImageButton)findViewById(R.id.image1);
         image2 = (ImageButton)findViewById(R.id.image2);
         image3 = (ImageButton)findViewById(R.id.image3);
         image4 = (ImageButton)findViewById(R.id.image4);
-
+image1.setBackgroundColor(0xFF0000F9);
 
         choices = new ArrayList<>();
         choices.add(image1);
@@ -53,30 +59,30 @@ public class QuizActivity extends AppCompatActivity {
         populateImageArray(imagesToSet);
 
         //Here are stored the positions so I can keep track of which ones are already set
-        positions.add("0");
-        positions.add("1");
-        positions.add("2");
-        positions.add("3");
+
         Log.d("Cycle","CREATE IN PROGRESS");
         //Here I randomly choose the question to display
         quiz = new Quiz(generateQuestions());
+        setNextQuestion();
 
-        int questionNum = quiz.chooseQuestion();
-        int questionId = getResources().getIdentifier("question"+questionNum, "string",
-                getPackageName());
-        this.questionString.setText(this.questionString.getText().toString()+getResources().getString(questionId));
-        setImages(questionNum);
         Log.d("Cycle","CREATE DONE");
 
 
     }
 
+    private void setNextQuestion(){
+        int questionNum = quiz.chooseQuestion();
+        int questionId = getResources().getIdentifier("question"+questionNum, "string",
+                getPackageName());
+        this.questionString.setText(getResources().getString(questionId));
+        setImages(questionNum);
+    }
     private void populateImageArray(ArrayList<String> imagesToSet){
         Field[] drawablesFields = R.drawable.class.getFields();
 
         for (Field field : drawablesFields) {
             try {
-                if(field.getName().startsWith("question")) {
+                if(field.getName().startsWith("question")||field.getName().startsWith("random")) {
                     Log.i("GETDRAWABLES", "R.drawable." + field.getName());
                     imagesToSet.add(field.getName());
                 }
@@ -86,6 +92,11 @@ public class QuizActivity extends AppCompatActivity {
         }
     }
     private void setImages(int question){
+        ArrayList<String> positions = new ArrayList<String>();
+        positions.add("0");
+        positions.add("1");
+        positions.add("2");
+        positions.add("3");
         int pos = new Random().nextInt(positions.size()) ;
         this.quiz.setCurrentQuestion(question);
         this.rightAnswerPos = pos;
@@ -126,6 +137,7 @@ public class QuizActivity extends AppCompatActivity {
             if (!(p.equals("set"))) {
                 Log.d("Setting", " Other Position " + p);
                 //Select a random pic that has not been used for this question
+                Log.d("ImageArray", imagesToSet.size()+"");
                 int rndPic = new Random().nextInt(imagesToSet.size())  ;
                 //pull its name from the available images array
                 String newPic = imagesToSet.get(rndPic);
@@ -149,9 +161,7 @@ public class QuizActivity extends AppCompatActivity {
         //here I get the number of questions we have in the quiz
         //by counting the question pictures
         for(Field field : fields){
-            Log.d("chooseQuestion",numOfQuestions+"");
             if(field.getName().startsWith("question")){
-                Log.d("chooseQuestion","IF TRUE");
                 numOfQuestions++;
                 questions.add(numOfQuestions+"");
             }
@@ -174,6 +184,21 @@ public class QuizActivity extends AppCompatActivity {
         int imgpos = Integer.parseInt(imgnum)-1;
         if(this.rightAnswerPos == imgpos){
             Log.d("AnswerCheck", "Right answer");
+            quiz.addPoint();;
+            quiz.addToQuestionCounter();
+        }
+        else{
+            if(secondTry) {
+                quiz.addToQuestionCounter();
+                this.secondTry = false;
+                img.setBackground(getDrawable(R.drawable.wrong));
+                setNextQuestion();
+            }
+            else{
+                img.setBackground(getDrawable(R.drawable.wrong));
+                this.secondTry = true;
+            }
+
         }
     }
 }

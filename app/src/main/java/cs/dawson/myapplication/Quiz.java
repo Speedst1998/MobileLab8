@@ -1,5 +1,7 @@
 package cs.dawson.myapplication;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -8,10 +10,10 @@ import java.util.Random;
  */
 
 public class Quiz {
-    private int correctAnswers = 0;
-    private int score = 0;
+
     private int questionCounter = 0;
     private int currentQuestion= 0;
+    private int numOfCorrectAnswers = 0;
     private ArrayList<String> questionNumbers;
 
     public Quiz(ArrayList<String> questions){
@@ -32,12 +34,14 @@ public class Quiz {
 
         boolean notFound = true;
         int questionNum = 0;
+        Log.d("Questions",questionNumbers.toString() );
 
         while(notFound) {
 
             questionNum = new Random().nextInt(this.questionNumbers.size()) + 1 ;
-
+            Log.d("Questions",questionNum+"");
             if(!(questionNumbers.get(questionNum-1).equals("answered"))) {
+                Log.d("Questions",questionNumbers.toString() );
                 notFound = false;
                 questionNumbers.set(questionNum-1, "answered");
             }
@@ -51,11 +55,11 @@ public class Quiz {
     public int getCurrentQuestion(){
         return this.currentQuestion;
     }
-    public void setScore(int sc){
-        this.score = sc;
+    public void addPoint(){
+        this.numOfCorrectAnswers++;
     }
     public int getScore(){
-        return this.score;
+        return this.numOfCorrectAnswers/questionCounter;
     }
     public void addToQuestionCounter(){
         this.questionCounter++;
