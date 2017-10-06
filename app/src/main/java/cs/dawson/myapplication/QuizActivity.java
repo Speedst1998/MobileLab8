@@ -13,7 +13,7 @@ import java.util.Random;
 /**
  * Created by 1534979 on 9/29/2017.
  */
-//TODO MAKE SURE RANDOM BOUDARIES ARE RIGHT
+
 
 public class QuizActivity extends AppCompatActivity {
 
@@ -49,10 +49,10 @@ public class QuizActivity extends AppCompatActivity {
         populateImageArray(imagesToSet);
 
         //Here are stored the positions so I can keep track of which ones are already set
+        positions.add("0");
         positions.add("1");
         positions.add("2");
         positions.add("3");
-        positions.add("4");
         Log.d("Cycle","CREATE IN PROGRESS");
         //Here I randomly choose the question to display
         quiz = new Quiz(generateQuestions());
@@ -91,24 +91,24 @@ public class QuizActivity extends AppCompatActivity {
                 imageId = getResources().getIdentifier("question"+question+"image", "drawable",
                         getPackageName());
                 Log.d("Setting", question+ " 1");
-                image1.setBackground(getDrawable(imageId));
+                choices.get(pos).setBackground(getDrawable(imageId));
                 break;
             case "2":
                 imageId = getResources().getIdentifier("question"+question+"image", "drawable",
                         getPackageName());
-                image2.setBackground(getDrawable(imageId));
+                choices.get(pos).setBackground(getDrawable(imageId));
                 Log.d("Setting", question+ " 2");
                 break;
             case "3":
                 imageId = getResources().getIdentifier("question"+question+"image", "drawable",
                         getPackageName());
-                image3.setBackground(getDrawable(imageId));
+                choices.get(pos).setBackground(getDrawable(imageId));
                 Log.d("Setting", question+ " 3");
                 break;
             case "4":
                 imageId = getResources().getIdentifier("question"+question+"image", "drawable",
                         getPackageName());
-                image4.setBackground(getDrawable(imageId));
+                choices.get(pos).setBackground(getDrawable(imageId));
                 Log.d("Setting", question+ " 4");
                 break;
         }
@@ -126,7 +126,7 @@ public class QuizActivity extends AppCompatActivity {
                 //this way I keep the code general instead of hardcoding the names of the images
                 imageId = getResources().getIdentifier(newPic, "drawable",
                         getPackageName());
-                choices.get(Integer.parseInt(p)-1).setBackground(getDrawable(imageId));
+                choices.get(Integer.parseInt(p)).setBackground(getDrawable(imageId));
             }
         }
 

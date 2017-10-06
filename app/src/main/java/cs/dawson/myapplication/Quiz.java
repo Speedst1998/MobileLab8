@@ -11,6 +11,7 @@ public class Quiz {
     private int correctAnswers = 0;
     private int score = 0;
     private int questionCounter = 0;
+    private int currentQuestion= 0;
     private ArrayList<String> questionNumbers;
 
     public Quiz(ArrayList<String> questions){
@@ -38,9 +39,10 @@ public class Quiz {
 
             if(!(questionNumbers.get(questionNum-1).equals("answered"))) {
                 notFound = false;
-                questionNumbers.set(questionNum, "answered");
+                questionNumbers.set(questionNum-1, "answered");
             }
         }
+        this.currentQuestion = questionNum;
         return questionNum;
     }
 
