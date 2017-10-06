@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Driving Quiz</string>
+    <string name="app_name">DQTaharKeylen</string>
     <string name="intro"> Welcome to drivers Quiz</string>
     <string name="start">Start</string>
     <string name="generalQuery">Which image matches</string>

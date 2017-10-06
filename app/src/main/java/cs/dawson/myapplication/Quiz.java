@@ -45,5 +45,23 @@ public class Quiz {
         this.currentQuestion = questionNum;
         return questionNum;
     }
+    public void setCurrentQuestion(int q){
+        this.currentQuestion= q;
+    }
+    public int getCurrentQuestion(){
+        return this.currentQuestion;
+    }
+    public void setScore(int sc){
+        this.score = sc;
+    }
+    public int getScore(){
+        return this.score;
+    }
+    public void addToQuestionCounter(){
+        this.questionCounter++;
+    }
+    public int getQuestionCounter(){
+        return this.questionCounter;
+    }
 
 }

@@ -4,6 +4,12 @@
     android:layout_height="match_parent">
 
 
+    <TextView
+        android:id="@+id/question"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/question1"
+        android:layout_weight="1.74" />
     <TableLayout
         android:id="@+id/tableLayout1"
         android:layout_width="match_parent"
@@ -74,11 +80,13 @@
     </TableLayout>
 
     <TextView
+        android:id="@+id/scoreNum"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/score"
         android:layout_weight="1.74" />
     <TextView
+        android:id="@+id/completeQuestions"
         android:layout_width="match_parent"
         android:layout_height="33dp"
         android:text="@string/completed"/>

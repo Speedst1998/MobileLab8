@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -22,9 +23,11 @@ public class QuizActivity extends AppCompatActivity {
     ImageButton image3;
     ImageButton image4;
     Quiz quiz;
+    int rightAnswerPos =0;
     ArrayList<String> imagesToSet;
     ArrayList<String> positions = new ArrayList<String>();
     ArrayList<ImageButton> choices;
+    TextView questionString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +47,7 @@ public class QuizActivity extends AppCompatActivity {
         choices.add(image3);
         choices.add(image4);
 
+        this.questionString = (TextView)findViewById(R.id.question);
         //Here i represent the images i need to set in an array
         imagesToSet = new ArrayList<String>();
         populateImageArray(imagesToSet);
@@ -58,6 +62,9 @@ public class QuizActivity extends AppCompatActivity {
         quiz = new Quiz(generateQuestions());
 
         int questionNum = quiz.chooseQuestion();
+        int questionId = getResources().getIdentifier("question"+questionNum, "string",
+                getPackageName());
+        this.questionString.setText(this.questionString.getText().toString()+getResources().getString(questionId));
         setImages(questionNum);
         Log.d("Cycle","CREATE DONE");
 
@@ -80,6 +87,8 @@ public class QuizActivity extends AppCompatActivity {
     }
     private void setImages(int question){
         int pos = new Random().nextInt(positions.size()) ;
+        this.quiz.setCurrentQuestion(question);
+        this.rightAnswerPos = pos;
         Log.d("Setting", "Position before setting in position array " + pos);
         positions.set(pos,"set");
         Log.d("Setting", "Position before setting in images to set array " + pos);
@@ -153,6 +162,18 @@ public class QuizActivity extends AppCompatActivity {
 
 
     public void checkAnswer(View v){
-
+        //Get the object that is concerned by the event
+        ImageButton img = (ImageButton) v;
+        //get the id of the imagebutton (the one from the layout)
+        String imgname = getResources().getResourceEntryName(img.getId());
+        //get the number at the end of the id to be able to determine position
+        String imgnum = imgname.substring(imgname.length()-1);
+        Log.d("AnswerCheck", imgnum);
+        //position is 0 based while the id is 1 based so i substract one from the id to get
+        //the position
+        int imgpos = Integer.parseInt(imgnum)-1;
+        if(this.rightAnswerPos == imgpos){
+            Log.d("AnswerCheck", "Right answer");
+        }
     }
 }
