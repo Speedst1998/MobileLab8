@@ -34,7 +34,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:adjustViewBounds="true"
-                android:background="@drawable/question1image"
+                android:src="@drawable/question1image"
                 android:onClick="checkAnswer"
                 android:scaleType="fitXY" />
         </LinearLayout>
@@ -52,7 +52,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:adjustViewBounds="true"
-                android:background="@drawable/question2image"
+                android:src="@drawable/question2image"
                 android:onClick="checkAnswer"
                 android:scaleType="fitXY" />
         </LinearLayout>
@@ -77,7 +77,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:adjustViewBounds="true"
-                android:background="@drawable/question3image"
+                android:src="@drawable/question3image"
                 android:onClick="checkAnswer"
                 android:scaleType="fitXY"
 
@@ -96,7 +96,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:adjustViewBounds="true"
-                android:background="@drawable/question4image"
+                android:src="@drawable/question4image"
                 android:onClick="checkAnswer"
                 android:scaleType="fitXY" />
         </LinearLayout>

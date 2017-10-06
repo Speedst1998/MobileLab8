@@ -1,5 +1,6 @@
 package cs.dawson.myapplication;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -137,24 +138,24 @@ public class QuizActivity extends AppCompatActivity {
                 imageId = getResources().getIdentifier("question"+question+"image", "drawable",
                         getPackageName());
                 Log.d("Setting", question+ " 1");
-                choices.get(pos).setBackground(getDrawable(imageId));
+                choices.get(pos).setImageResource(imageId);
                 break;
             case "2":
                 imageId = getResources().getIdentifier("question"+question+"image", "drawable",
                         getPackageName());
-                choices.get(pos).setBackground(getDrawable(imageId));
+                choices.get(pos).setImageResource(imageId);
                 Log.d("Setting", question+ " 2");
                 break;
             case "3":
                 imageId = getResources().getIdentifier("question"+question+"image", "drawable",
                         getPackageName());
-                choices.get(pos).setBackground(getDrawable(imageId));
+                choices.get(pos).setImageResource(imageId);
                 Log.d("Setting", question+ " 3");
                 break;
             case "4":
                 imageId = getResources().getIdentifier("question"+question+"image", "drawable",
                         getPackageName());
-                choices.get(pos).setBackground(getDrawable(imageId));
+                choices.get(pos).setImageResource(imageId);
                 Log.d("Setting", question+ " 4");
                 break;
         }
@@ -173,7 +174,7 @@ public class QuizActivity extends AppCompatActivity {
                 //this way I keep the code general instead of hardcoding the names of the images
                 imageId = getResources().getIdentifier(newPic, "drawable",
                         getPackageName());
-                choices.get(Integer.parseInt(p)).setBackground(getDrawable(imageId));
+                choices.get(Integer.parseInt(p)).setImageResource(imageId);
             }
         }
 
@@ -213,7 +214,7 @@ public class QuizActivity extends AppCompatActivity {
             quiz.addPoint();;
             quiz.addToQuestionCounter();
             this.completed.setText(getResources().getString(R.string.completed) +" "+ quiz.getQuestionCounter());
-            img.setBackgroundColor(0xFF0000F9);
+            img.setBackgroundColor(0xFF0000FF);
             this.next.setVisibility(View.VISIBLE);
 
         }
@@ -221,13 +222,13 @@ public class QuizActivity extends AppCompatActivity {
             if(secondTry) {
                 quiz.addToQuestionCounter();
                 this.secondTry = false;
-                img.setBackground(getDrawable(R.drawable.wrong));
+                img.setImageResource(R.drawable.wrong);
                 this.completed.setText(getResources().getString(R.string.completed) +" "+ quiz.getQuestionCounter());
-                choices.get(this.rightAnswerPos).setBackgroundColor(0xFF0000F9);
+                choices.get(this.rightAnswerPos).setBackgroundColor(0xFF0000FF);
                 this.next.setVisibility(View.VISIBLE);
             }
             else{
-                img.setBackground(getDrawable(R.drawable.wrong));
+                img.setImageResource(R.drawable.wrong);
                 this.secondTry = true;
             }
 
