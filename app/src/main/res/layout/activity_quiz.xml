@@ -1,102 +1,157 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:weightSum="100">
 
 
-    <TableLayout
-        android:id="@+id/tableLayout1"
+    <TextView
+        android:id="@+id/question"
         android:layout_width="match_parent"
-        android:layout_height="342dp"
-        android:layout_gravity="center">
+        android:layout_height="0dp"
+        android:layout_weight="10"
+        android:text="@string/question1" />
 
-        <!-- 2 columns -->
 
-        <TableRow
-            android:id="@+id/imageTableRow2"
+   <LinearLayout
+        android:id="@+id/imageTableRow2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="27"
+        android:orientation="horizontal">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="5dip">
+            android:orientation="horizontal"
+            android:layout_weight="50">
 
             <ImageButton
                 android:id="@+id/image1"
-                android:layout_weight="1"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:scaleType="fitCenter"
+                android:layout_weight="1"
                 android:adjustViewBounds="true"
+                android:src="@drawable/question1image"
                 android:onClick="checkAnswer"
-                android:background="@drawable/question1image"/>
+                android:scaleType="fitXY" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_weight="50">
 
             <ImageButton
                 android:id="@+id/image2"
-                android:layout_width="150dp"
-                android:layout_weight="1"
-                android:layout_height="150dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:scaleType="fitCenter"
+                android:layout_weight="1"
                 android:adjustViewBounds="true"
+                android:src="@drawable/question2image"
                 android:onClick="checkAnswer"
-                android:background="@drawable/question2image"/>
-        </TableRow>
+                android:scaleType="fitXY" />
+        </LinearLayout>
+    </LinearLayout>
 
-        <TableRow
-            android:id="@+id/imageTableRow1"
+    <LinearLayout
+        android:id="@+id/imageTableRow1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="27"
+        android:orientation="horizontal">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
-            android:padding="5dip">
+            android:orientation="horizontal"
+            android:layout_weight="50">
 
             <ImageButton
                 android:id="@+id/image3"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:scaleType="fitCenter"
                 android:adjustViewBounds="true"
+                android:src="@drawable/question3image"
                 android:onClick="checkAnswer"
-                android:background="@drawable/question3image"
+                android:scaleType="fitXY"
 
                 />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_weight="50">
 
             <ImageButton
                 android:id="@+id/image4"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:scaleType="fitCenter"
                 android:adjustViewBounds="true"
+                android:src="@drawable/question4image"
                 android:onClick="checkAnswer"
-                android:background="@drawable/question4image"/>
-        </TableRow>
+                android:scaleType="fitXY" />
+        </LinearLayout>
+    </LinearLayout>
 
-    </TableLayout>
+
 
     <TextView
+        android:id="@+id/scoreNum"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:text="@string/score"
-        android:layout_weight="1.74" />
+        android:layout_weight="7" />
+
     <TextView
+        android:id="@+id/completeQuestions"
         android:layout_width="match_parent"
-        android:layout_height="33dp"
+        android:layout_height="0dp"
+        android:layout_weight="7"
         android:text="@string/completed"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:layout_weight="20"
+        android:weightSum="100"
+        >
     <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="33"
         android:layout_gravity="center"
         android:text="@string/hint"
         android:onClick="showHint"/>
+
     <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:id="@+id/button2"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="33"
         android:layout_gravity="center"
-        android:text="@string/about"
-        android:onClick="showAbout"/>
+        android:onClick="showAbout"
+        android:text="@string/about" />
 
+    <Button
+        android:id="@+id/nextButton"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:text="@string/next"
+        android:layout_weight="33"
+        android:visibility="invisible"
+        android:onClick="setNextQuestion"/>
 
+    </LinearLayout>-->
 
 </LinearLayout>
