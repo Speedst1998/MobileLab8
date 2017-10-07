@@ -22,7 +22,7 @@ public class QuizActivity extends AppCompatActivity {
     ImageButton image4;
     Quiz quiz;
     ArrayList<String> imagesToSet;
-    ArrayList<String> positions;
+    ArrayList<String> positions = new ArrayList<String>();
     ArrayList<ImageButton> choices;
 
     @Override
@@ -48,14 +48,15 @@ public class QuizActivity extends AppCompatActivity {
         populateImageArray(imagesToSet);
 
         //Here are stored the positions so I can keep track of which ones are already set
+
         positions.add("1");
         positions.add("2");
         positions.add("3");
         positions.add("4");
-        Log.d("Cycle","CREATE IN PROGRESS");
+
         //Here I randomly choose the question to display
         quiz = new Quiz(generateQuestions());
-
+        Log.d("Cycle","CREATE IN PROGRESS");
         int questionNum = quiz.chooseQuestion();
         Log.d("Cycle","CREATE DONE");
 
