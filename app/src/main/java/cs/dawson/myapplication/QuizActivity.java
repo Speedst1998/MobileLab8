@@ -1,6 +1,6 @@
 package cs.dawson.myapplication;
 
-import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -8,8 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -28,12 +26,8 @@ public class QuizActivity extends AppCompatActivity {
     ImageButton image4;
     Quiz quiz;
     int rightAnswerPos =0;
+    Drawable defaultButtonBackground;
     ArrayList<String> imagesToSet;
-<<<<<<< HEAD
-    ArrayList<String> positions = new ArrayList<String>();
-=======
-
->>>>>>> f3eab8b003a43ae41b60b193bde042d9232257b4
     ArrayList<ImageButton> choices;
     TextView questionString;
     TextView score;
@@ -56,8 +50,8 @@ public class QuizActivity extends AppCompatActivity {
         image3 = (ImageButton)findViewById(R.id.image3);
         image4 = (ImageButton)findViewById(R.id.image4);
 
-
-        choices = new ArrayList<>();
+        defaultButtonBackground = image1.getBackground();
+                choices = new ArrayList<>();
         choices.add(image1);
         choices.add(image2);
         choices.add(image3);
@@ -70,23 +64,12 @@ public class QuizActivity extends AppCompatActivity {
 
         //Here are stored the positions so I can keep track of which ones are already set
 
-<<<<<<< HEAD
-        positions.add("1");
-        positions.add("2");
-        positions.add("3");
-        positions.add("4");
 
-        //Here I randomly choose the question to display
-        quiz = new Quiz(generateQuestions());
-        Log.d("Cycle","CREATE IN PROGRESS");
-        int questionNum = quiz.chooseQuestion();
-=======
         Log.d("Cycle","CREATE IN PROGRESS");
         //Here I randomly choose the question to display
         quiz = new Quiz(generateQuestions());
         setNextQuestion();
 
->>>>>>> f3eab8b003a43ae41b60b193bde042d9232257b4
         Log.d("Cycle","CREATE DONE");
 
 
@@ -175,9 +158,15 @@ public class QuizActivity extends AppCompatActivity {
                 Log.d("Setting", question+ " 4");
                 break;
         }
-
+        int i =0;
         for(String p : positions){
+            //reset background colors
+            if(p.equals("set")){
+                choices.get(i).setBackground(this.defaultButtonBackground);
+            }
             if (!(p.equals("set"))) {
+                //reset background colors
+                choices.get(Integer.parseInt(p)).setBackground(this.defaultButtonBackground);
                 Log.d("Setting", " Other Position " + p);
                 //Select a random pic that has not been used for this question
                 Log.d("ImageArray", imagesToSet.size()+"");
@@ -192,6 +181,7 @@ public class QuizActivity extends AppCompatActivity {
                         getPackageName());
                 choices.get(Integer.parseInt(p)).setImageResource(imageId);
             }
+            i++;
         }
 
     }
