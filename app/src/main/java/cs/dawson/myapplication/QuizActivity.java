@@ -1,5 +1,7 @@
 package cs.dawson.myapplication;
 
+import android.app.SearchManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -17,6 +19,7 @@ import java.util.Random;
 
 public class QuizActivity extends AppCompatActivity {
 
+    Integer questionNum;
     ImageButton image1;
     ImageButton image2;
     ImageButton image3;
@@ -57,7 +60,7 @@ public class QuizActivity extends AppCompatActivity {
         //Here I randomly choose the question to display
         quiz = new Quiz(generateQuestions());
 
-        int questionNum = quiz.chooseQuestion();
+        questionNum = quiz.chooseQuestion();
         setImages(questionNum);
         Log.d("Cycle","CREATE DONE");
 
@@ -84,6 +87,7 @@ public class QuizActivity extends AppCompatActivity {
         positions.set(pos,"set");
         Log.d("Setting", "Position before setting in images to set array " + pos);
         imagesToSet.remove("question"+question+"image");
+
         Log.d("Setting", "Position " + pos);
         int imageId;
         switch(question+""){
@@ -154,5 +158,32 @@ public class QuizActivity extends AppCompatActivity {
 
     public void checkAnswer(View v){
 
+    }
+
+    public void showHint(View view) {
+        String query = getResources().getString(R.string.road_sign)+" ";
+        Log.d("hint","Should only contain road sign: "+ query);
+        switch(questionNum){
+            case 1:
+                query += getResources().getString(R.string.question1);
+                break;
+            case 2:
+                query += getResources().getString(R.string.question2);
+                break;
+            case 3:
+                query += getResources().getString(R.string.question3);
+                break;
+            case 4:
+                query += getResources().getString(R.string.question4);
+                break;
+        }
+
+        Log.i("hint","Description to search: "+ query);
+        Intent intent = new Intent(Intent.ACTION_WEB_SEARCH);
+        intent.putExtra(SearchManager.QUERY, query);
+        query="";
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
     }
 }

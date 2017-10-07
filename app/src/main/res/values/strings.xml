@@ -19,9 +19,10 @@
     <string name="hint2">Very dangerous on 1 direction streets</string>
     <string name="hint3">Swerve incoming</string>
     <string name="hint4">Squeeze</string>
-    <string name="question1">Road surface in certain areas may be slippery when wet</string>
-    <string name="question2">No U-turn</string>
-    <string name="question3">Winding road ahead</string>
-    <string name="question4">Bridge or tunnel is narrower than the approach</string>
+    <string name="question1">road surface in certain areas may be slippery when wet</string>
+    <string name="question2">no U-turn</string>
+    <string name="question3">winding road ahead</string>
+    <string name="question4">bridge or tunnel is narrower than the approach</string>
+    <string name="road_sign">Road sign </string>
     <string name="hall_of_fame">Hall Of Fame : </string>
 </resources>
