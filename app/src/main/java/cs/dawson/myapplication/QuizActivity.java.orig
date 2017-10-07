@@ -1,9 +1,6 @@
 package cs.dawson.myapplication;
 
-
-import android.app.SearchManager;
-import android.content.Intent;
-import android.graphics.drawable.Drawable;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -11,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -23,15 +22,18 @@ import java.util.Random;
 
 public class QuizActivity extends AppCompatActivity {
 
-    Integer questionNum;
     ImageButton image1;
     ImageButton image2;
     ImageButton image3;
     ImageButton image4;
     Quiz quiz;
     int rightAnswerPos =0;
-    Drawable defaultButtonBackground;
     ArrayList<String> imagesToSet;
+<<<<<<< HEAD
+    ArrayList<String> positions = new ArrayList<String>();
+=======
+
+>>>>>>> f3eab8b003a43ae41b60b193bde042d9232257b4
     ArrayList<ImageButton> choices;
     TextView questionString;
     TextView score;
@@ -54,8 +56,8 @@ public class QuizActivity extends AppCompatActivity {
         image3 = (ImageButton)findViewById(R.id.image3);
         image4 = (ImageButton)findViewById(R.id.image4);
 
-        defaultButtonBackground = image1.getBackground();
-                choices = new ArrayList<>();
+
+        choices = new ArrayList<>();
         choices.add(image1);
         choices.add(image2);
         choices.add(image3);
@@ -68,14 +70,23 @@ public class QuizActivity extends AppCompatActivity {
 
         //Here are stored the positions so I can keep track of which ones are already set
 
+<<<<<<< HEAD
+        positions.add("1");
+        positions.add("2");
+        positions.add("3");
+        positions.add("4");
 
+        //Here I randomly choose the question to display
+        quiz = new Quiz(generateQuestions());
+        Log.d("Cycle","CREATE IN PROGRESS");
+        int questionNum = quiz.chooseQuestion();
+=======
         Log.d("Cycle","CREATE IN PROGRESS");
         //Here I randomly choose the question to display
         quiz = new Quiz(generateQuestions());
         setNextQuestion();
 
-        questionNum = quiz.chooseQuestion();
-        setImages(questionNum);
+>>>>>>> f3eab8b003a43ae41b60b193bde042d9232257b4
         Log.d("Cycle","CREATE DONE");
 
 
@@ -136,7 +147,6 @@ public class QuizActivity extends AppCompatActivity {
         Log.d("Setting", "Position before setting in images to set array " + pos);
         //remove image from array so its not reused
         imagesToSet.remove("question"+question+"image");
-
         Log.d("Setting", "Position " + pos);
         int imageId;
         switch(question+""){
@@ -165,15 +175,9 @@ public class QuizActivity extends AppCompatActivity {
                 Log.d("Setting", question+ " 4");
                 break;
         }
-        int i =0;
+
         for(String p : positions){
-            //reset background colors
-            if(p.equals("set")){
-                choices.get(i).setBackground(this.defaultButtonBackground);
-            }
             if (!(p.equals("set"))) {
-                //reset background colors
-                choices.get(Integer.parseInt(p)).setBackground(this.defaultButtonBackground);
                 Log.d("Setting", " Other Position " + p);
                 //Select a random pic that has not been used for this question
                 Log.d("ImageArray", imagesToSet.size()+"");
@@ -188,7 +192,6 @@ public class QuizActivity extends AppCompatActivity {
                         getPackageName());
                 choices.get(Integer.parseInt(p)).setImageResource(imageId);
             }
-            i++;
         }
 
     }
@@ -245,33 +248,6 @@ public class QuizActivity extends AppCompatActivity {
                 this.secondTry = true;
             }
 
-        }
-    }
-
-    public void showHint(View view) {
-        String query = getResources().getString(R.string.road_sign)+" ";
-        Log.d("hint","Should only contain road sign: "+ query);
-        switch(questionNum){
-            case 1:
-                query += getResources().getString(R.string.question1);
-                break;
-            case 2:
-                query += getResources().getString(R.string.question2);
-                break;
-            case 3:
-                query += getResources().getString(R.string.question3);
-                break;
-            case 4:
-                query += getResources().getString(R.string.question4);
-                break;
-        }
-
-        Log.i("hint","Description to search: "+ query);
-        Intent intent = new Intent(Intent.ACTION_WEB_SEARCH);
-        intent.putExtra(SearchManager.QUERY, query);
-        query="";
-        if (intent.resolveActivity(getPackageManager()) != null) {
-            startActivity(intent);
         }
     }
 }
