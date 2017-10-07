@@ -250,8 +250,8 @@ public class QuizActivity extends AppCompatActivity {
 
     public void showHint(View view) {
         String query = getResources().getString(R.string.road_sign)+" ";
-        Log.d("hint","Should only contain road sign: "+ query);
-        switch(questionNum){
+
+        switch(quiz.getCurrentQuestion()){
             case 1:
                 query += getResources().getString(R.string.question1);
                 break;
@@ -267,6 +267,7 @@ public class QuizActivity extends AppCompatActivity {
         }
 
         Log.i("hint","Description to search: "+ query);
+        Log.d("hint","The returning question number : "+ quiz.getCurrentQuestion());
         Intent intent = new Intent(Intent.ACTION_WEB_SEARCH);
         intent.putExtra(SearchManager.QUERY, query);
         query="";
