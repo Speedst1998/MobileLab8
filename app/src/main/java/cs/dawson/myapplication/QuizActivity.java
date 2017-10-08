@@ -28,6 +28,7 @@ public class QuizActivity extends AppCompatActivity {
     int rightAnswerPos =0;
     Drawable defaultButtonBackground;
     ArrayList<String> imagesToSet;
+    ArrayList<String> currentImages= new ArrayList<String>(4);
     ArrayList<ImageButton> choices;
     TextView questionString;
     TextView score;
@@ -51,7 +52,7 @@ public class QuizActivity extends AppCompatActivity {
         image4 = (ImageButton)findViewById(R.id.image4);
 
         defaultButtonBackground = image1.getBackground();
-                choices = new ArrayList<>();
+        choices = new ArrayList<>();
         choices.add(image1);
         choices.add(image2);
         choices.add(image3);
@@ -69,7 +70,8 @@ public class QuizActivity extends AppCompatActivity {
         //Here I randomly choose the question to display
         quiz = new Quiz(generateQuestions());
         setNextQuestion();
-
+        this.score.setText(getResources().getString(R.string.score) + this.quiz.getScore());
+        this.completed.setText(getResources().getString(R.string.completed) +" "+ quiz.getQuestionCounter()+ " "+getResources().getString(R.string.total));
         Log.d("Cycle","CREATE DONE");
 
 
@@ -132,32 +134,36 @@ public class QuizActivity extends AppCompatActivity {
         imagesToSet.remove("question"+question+"image");
         Log.d("Setting", "Position " + pos);
         int imageId;
-        switch(question+""){
-            case "1":
+       // switch(question+""){
+            //case "1":
                 imageId = getResources().getIdentifier("question"+question+"image", "drawable",
                         getPackageName());
+                currentImages.add(pos,"question"+question+"image");
                 Log.d("Setting", question+ " 1");
                 choices.get(pos).setImageResource(imageId);
-                break;
-            case "2":
-                imageId = getResources().getIdentifier("question"+question+"image", "drawable",
+                //break;
+            //case "2":
+                /*imageId = getResources().getIdentifier("question"+question+"image", "drawable",
                         getPackageName());
+                currentImages.add(pos,"question"+question+"image");
                 choices.get(pos).setImageResource(imageId);
                 Log.d("Setting", question+ " 2");
-                break;
-            case "3":
+                //break;
+            //case "3":
                 imageId = getResources().getIdentifier("question"+question+"image", "drawable",
                         getPackageName());
+                currentImages.add(pos,"question"+question+"image");
                 choices.get(pos).setImageResource(imageId);
                 Log.d("Setting", question+ " 3");
-                break;
-            case "4":
+               // break;
+            //case "4":
                 imageId = getResources().getIdentifier("question"+question+"image", "drawable",
                         getPackageName());
+                currentImages.add(pos,"question"+question+"image");
                 choices.get(pos).setImageResource(imageId);
                 Log.d("Setting", question+ " 4");
-                break;
-        }
+               // break;
+        //}*/
         int i =0;
         for(String p : positions){
             //reset background colors
@@ -220,6 +226,7 @@ public class QuizActivity extends AppCompatActivity {
             quiz.addPoint();;
             quiz.addToQuestionCounter();
             this.completed.setText(getResources().getString(R.string.completed) +" "+ quiz.getQuestionCounter());
+            this.score.setText(getResources().getString(R.string.score) + this.quiz.getScore());
             img.setBackgroundColor(0xFF0000FF);
             this.next.setVisibility(View.VISIBLE);
 
@@ -229,7 +236,8 @@ public class QuizActivity extends AppCompatActivity {
                 quiz.addToQuestionCounter();
                 this.secondTry = false;
                 img.setImageResource(R.drawable.wrong);
-                this.completed.setText(getResources().getString(R.string.completed) +" "+ quiz.getQuestionCounter());
+                this.score.setText(getResources().getString(R.string.score) + this.quiz.getScore());
+                this.completed.setText(getResources().getString(R.string.completed) +" "+ quiz.getQuestionCounter()+ " "+getResources().getString(R.string.total));
                 choices.get(this.rightAnswerPos).setBackgroundColor(0xFF0000FF);
                 this.next.setVisibility(View.VISIBLE);
             }
@@ -239,5 +247,14 @@ public class QuizActivity extends AppCompatActivity {
             }
 
         }
+    }
+    @Override
+    protected void onSaveInstanceState(Bundle savedInstanceState){
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putInt("score",this.quiz.getScore());
+        savedInstanceState.putInt("questionCounter",this.quiz.getQuestionCounter());
+        savedInstanceState.putInt("currentQuestion",this.quiz.getCurrentQuestion());
+        savedInstanceState.putStringArrayList("imagesToSet",this.imagesToSet);
+        //savedInstanceState.putString("image1",this.choices.get(0).getDrawable().ge)
     }
 }

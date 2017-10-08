@@ -59,7 +59,12 @@ public class Quiz {
         this.numOfCorrectAnswers++;
     }
     public int getScore(){
-        return this.numOfCorrectAnswers/questionCounter;
+        if(this.questionCounter != 0){
+            return (this.numOfCorrectAnswers/questionCounter)*100;
+        }
+        else{
+            return 0;
+        }
     }
     public void addToQuestionCounter(){
         this.questionCounter++;
