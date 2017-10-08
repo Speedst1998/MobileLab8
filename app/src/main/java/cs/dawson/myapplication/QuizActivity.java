@@ -3,6 +3,7 @@ package cs.dawson.myapplication;
 
 import android.app.SearchManager;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -38,11 +39,14 @@ public class QuizActivity extends AppCompatActivity {
     TextView completed;
     Button next;
     boolean secondTry = false;
+    private SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
+
+        prefs = getPreferences(MODE_PRIVATE);
 
         //image420dab
         score = (TextView) findViewById(R.id.scoreNum);
@@ -212,6 +216,8 @@ public class QuizActivity extends AppCompatActivity {
 
 
     public void checkAnswer(View v){
+        //Save the values
+        //SharedPreferences.Editor editor = prefs.edit();
         //Get the object that is concerned by the event
         ImageButton img = (ImageButton) v;
         //get the id of the imagebutton (the one from the layout)
@@ -246,6 +252,10 @@ public class QuizActivity extends AppCompatActivity {
             }
 
         }
+
+
+        //editor.commit();
+
     }
 
     public void showHint(View view) {
