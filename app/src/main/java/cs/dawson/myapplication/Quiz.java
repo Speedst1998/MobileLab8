@@ -52,6 +52,18 @@ public class Quiz {
     public void setCurrentQuestion(int q){
         this.currentQuestion= q;
     }
+    public void setNumOfCorrectAnswers(int n){
+        this.numOfCorrectAnswers = n;
+    }
+    public void setQuestionCounter(int c){
+        this.questionCounter = c;
+    }
+    public int getNumOfCorrectAnswers(){
+        return this.numOfCorrectAnswers;
+    }
+    public void setQuestionNumbers(ArrayList<String> questions){
+        this.questionNumbers = questions;
+    }
     public int getCurrentQuestion(){
         return this.currentQuestion;
     }
@@ -60,7 +72,7 @@ public class Quiz {
     }
     public int getScore(){
         if(this.questionCounter != 0){
-            return (this.numOfCorrectAnswers/questionCounter)*100;
+            return (int)(((double)this.numOfCorrectAnswers/(double)questionCounter)*100);
         }
         else{
             return 0;
