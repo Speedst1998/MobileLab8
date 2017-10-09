@@ -24,7 +24,7 @@ import java.util.Random;
 
 public class QuizActivity extends AppCompatActivity {
 
-    Integer questionNum;
+
     ImageButton image1;
     ImageButton image2;
     ImageButton image3;
@@ -50,8 +50,8 @@ public class QuizActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
 
-<<<<<<< HEAD
-=======
+
+
         currentImages.add("");
         currentImages.add("");
         currentImages.add("");
@@ -61,7 +61,7 @@ public class QuizActivity extends AppCompatActivity {
         buttonBackgrounds.add("white");
         buttonBackgrounds.add("white");
 
->>>>>>> 8c7f0efe7e87fb40c11d5da0529527a238b84d28
+
 
         prefs = getPreferences(MODE_PRIVATE);
 
@@ -101,8 +101,7 @@ public class QuizActivity extends AppCompatActivity {
 
         setNextQuestion();
 
-        questionNum = quiz.chooseQuestion();
-        setImages(questionNum);
+
         Log.d("Cycle","CREATE DONE");
 
 
@@ -117,12 +116,13 @@ public class QuizActivity extends AppCompatActivity {
 
         SharedPreferences.Editor editor = prefs.edit();
 
-        editor.putInt("CurrentQuestion",quiz.getCurrentQuestion());
+        editor.putInt("CurrentQuestion",this.quiz.getCurrentQuestion());
         Log.d("SHPREFS", "onPause CurrentQuestion: " + prefs.getInt("CurrentQuestion",0));
-        editor.putInt("QuestionCounter",quiz.getQuestionCounter());
+        editor.putInt("QuestionCounter",this.quiz.getQuestionCounter());
         Log.d("SHPREFS", "onPause QuestionCounter: " + prefs.getInt("QuestionCounter",0));
-        editor.putInt("NumOfCorrectAnswers",quiz.getNumOfCorrectAnswers());
+        editor.putInt("NumOfCorrectAnswers",this.quiz.getNumOfCorrectAnswers());
         Log.i("SHPREFS", "onPause NumOfCorrectAnswers: " + prefs.getInt("NumOfCorrectAnswers",0));
+        editor.commit();
     }
 
 
