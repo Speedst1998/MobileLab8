@@ -67,6 +67,6 @@ public class Quiz {
     public int getQuestionCounter(){
         return this.questionCounter;
     }
-
+    public int getNumOfCorrectAnswers(){return this.numOfCorrectAnswers;}
 
 }

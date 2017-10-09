@@ -46,7 +46,9 @@ public class QuizActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
 
+
         prefs = getPreferences(MODE_PRIVATE);
+
 
         //image420dab
         score = (TextView) findViewById(R.id.scoreNum);
@@ -76,6 +78,11 @@ public class QuizActivity extends AppCompatActivity {
         Log.d("Cycle","CREATE IN PROGRESS");
         //Here I randomly choose the question to display
         quiz = new Quiz(generateQuestions());
+
+        Log.i("SHPREFS", "onCreate CurrentQuestion: " + prefs.getInt("CurrentQuestion",0));
+        Log.i("SHPREFS", "onCreate QuestionCounter: " + prefs.getInt("QuestionCounter",0));
+        Log.i("SHPREFS", "onCreate NumOfCorrectAnswers: " + prefs.getInt("NumOfCorrectAnswers",0));
+
         setNextQuestion();
 
         questionNum = quiz.chooseQuestion();
@@ -84,6 +91,24 @@ public class QuizActivity extends AppCompatActivity {
 
 
     }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        setContentView(R.layout.activity_quiz);
+
+        prefs = getPreferences(MODE_PRIVATE);
+
+        SharedPreferences.Editor editor = prefs.edit();
+
+        editor.putInt("CurrentQuestion",quiz.getCurrentQuestion());
+        Log.d("SHPREFS", "onPause CurrentQuestion: " + prefs.getInt("CurrentQuestion",0));
+        editor.putInt("QuestionCounter",quiz.getQuestionCounter());
+        Log.d("SHPREFS", "onPause QuestionCounter: " + prefs.getInt("QuestionCounter",0));
+        editor.putInt("NumOfCorrectAnswers",quiz.getNumOfCorrectAnswers());
+        Log.i("SHPREFS", "onPause NumOfCorrectAnswers: " + prefs.getInt("NumOfCorrectAnswers",0));
+    }
+
 
     /**
      * this method sets the next question page
