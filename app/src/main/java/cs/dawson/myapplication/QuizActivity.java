@@ -1,7 +1,9 @@
 package cs.dawson.myapplication;
 
 import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -13,7 +15,9 @@ import android.widget.TextView;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 
 /**
  * Created by 1534979 on 9/29/2017.
@@ -41,10 +45,13 @@ public class QuizActivity extends AppCompatActivity {
     Boolean nextVisible = false;
     boolean secondTry = false;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
+        SharedPreferences prefs = getSharedPreferences("prefs", Context.MODE_PRIVATE);
         currentImages.add("");
         currentImages.add("");
         currentImages.add("");
@@ -73,19 +80,73 @@ public class QuizActivity extends AppCompatActivity {
         this.questionString = (TextView)findViewById(R.id.question);
         //Here i represent the images i need to set in an array
         imagesToSet = new ArrayList<String>();
+        Log.d("Cycle","Before shared Prefs");
+        restorePrefs(prefs);
+        Log.d("Cycle","After shared Prefs");
         populateImageArray(imagesToSet);
-
-        //Here are stored the positions so I can keep track of which ones are already set
 
 
         Log.d("Cycle","CREATE IN PROGRESS");
         //Here I randomly choose the question to display
+
         quiz = new Quiz(generateQuestions());
+        //restoreQuiz(prefs);
         setNextQuestion();
 
         Log.d("Cycle","CREATE DONE");
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        savePreferences();
+
+    }
+
+    public void restoreQuiz(SharedPreferences prefs){
+        ArrayList strings = new ArrayList<String>();
+        Set<String> set;
+
+        this.quiz.setNumOfCorrectAnswers(prefs.getInt("numOfCorrectAnswers", 0));
+        Log.i("PREFS","Number of correct answers: "+ this.quiz.getNumOfCorrectAnswers());
+
+        this.quiz.setQuestionCounter(prefs.getInt("questionCounter", 0));
+        this.quiz.setCurrentQuestion(prefs.getInt("currentQuestion", 0));
+
+        //Retrieve the question number
+
+        set = prefs.getStringSet("questionNumbers", new HashSet<String>());
+        strings.addAll(set);
+        this.quiz.setQuestionNumbers(strings);
+
+    }
+
+    public void restorePrefs(SharedPreferences prefs){
+        ArrayList strings = new ArrayList<String>();
+        Set<String> set;
+
+        Log.i("PREFS","BEFORE Right answer position: "+ this.rightAnswerPos);
+        this.rightAnswerPos = prefs.getInt("rightAnswerPos", 0);
+        Log.i("PREFS","AFTER Right answer position: "+ this.rightAnswerPos);
+
+        this.secondTry = prefs.getBoolean("secondTry", false);
+        Log.i("PREFS","Is this the second try: "+ this.secondTry);
 
 
+        //Retrieve the images to set
+        set = prefs.getStringSet("imagesToSet", new HashSet<String>());
+        this.imagesToSet.addAll(set);
+
+        //Retrieve the currentImages
+        set = prefs.getStringSet("currentImages", new HashSet<String>());
+        this.currentImages.addAll(set);
+
+        //Retrieve the button backgrounds
+        set = prefs.getStringSet("buttonBackground", new HashSet<String>());
+        this.buttonBackgrounds.addAll(set);
+
+
+        this.clickable = prefs.getBoolean("clickable", true);
     }
 
     /**
@@ -266,6 +327,12 @@ public class QuizActivity extends AppCompatActivity {
             }
 
         }
+        if(this.quiz.getQuestionCounter() == 4) {
+            this.next.setVisibility(View.INVISIBLE);
+            this.completed.setText(R.string.finished);
+            this.nextVisible = false;
+
+        }
     }
     @Override
     protected void onSaveInstanceState(Bundle savedInstanceState){
@@ -337,6 +404,7 @@ public class QuizActivity extends AppCompatActivity {
         Log.d("restoring",this.currentImages.toString());
     }
 
+
     public void showHint(View view) {
         String query = getResources().getString(R.string.road_sign)+" ";
 
@@ -363,5 +431,52 @@ public class QuizActivity extends AppCompatActivity {
         if (intent.resolveActivity(getPackageManager()) != null) {
             startActivity(intent);
         }
+    }
+
+
+    public void savePreferences(){
+        SharedPreferences prefs = getSharedPreferences("prefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt("score1",this.quiz.getScore());
+
+        Log.d("SCORE", "Saved score1 as : " + this.quiz.getScore());
+        if(this.quiz.getScore() != 0) {
+            editor.putInt("score2", prefs.getInt("score1", 0));
+        }
+        editor.putInt("numOfCorrectAnswers",this.quiz.getNumOfCorrectAnswers());
+        editor.putInt("questionCounter",this.quiz.getQuestionCounter());
+        editor.putInt("currentQuestion",this.quiz.getCurrentQuestion());
+        editor.putInt("rightAnswerPos",this.rightAnswerPos);
+        editor.putBoolean("secondTry",this.secondTry);
+        editor.putBoolean("clickable",this.clickable);
+        editor.putBoolean("nextVisible",this.nextVisible);
+
+        //Save the images to be set
+        Set<String> set = new HashSet<String>();
+        set.addAll(this.imagesToSet);
+        editor.putStringSet("imagesToSet", set);
+
+        //editor.putStringArrayList("imagesToSet",this.imagesToSet);
+
+        //Save the button backgrounds to be set
+        set.addAll(this.buttonBackgrounds);
+        editor.putStringSet("buttonBackground", set);
+
+        //editor.putStringArrayList("buttonBackground",this.buttonBackgrounds);
+
+        //Save the question numbers to be set
+        set.addAll(this.quiz.getQuestions());
+        editor.putStringSet("questionNumbers", set);
+
+        //editor.putStringArrayList("questionNumbers",this.quiz.getQuestions());
+
+        //Save the current images to be set
+        set.addAll(this.currentImages);
+        editor.putStringSet("currentImages", set);
+
+        //editor.putStringArrayList("currentImages",this.currentImages);
+        editor.commit();
+        Log.d("SCORE", "After the commit");
+
     }
 }

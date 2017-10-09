@@ -27,4 +27,5 @@
     <string name="question4">bridge or tunnel is narrower than the approach</string>
     <string name="road_sign">Road sign </string>
     <string name="hall_of_fame">Hall Of Fame : </string>
+    <string name="finished">The quiz is over</string>
 </resources>
