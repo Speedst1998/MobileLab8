@@ -33,11 +33,15 @@ public class QuizActivity extends AppCompatActivity {
     int rightAnswerPos =0;
     Drawable defaultButtonBackground;
     ArrayList<String> imagesToSet;
+    ArrayList<String> buttonBackgrounds = new ArrayList<String>();
+    ArrayList<String> currentImages= new ArrayList<String>();
     ArrayList<ImageButton> choices;
     TextView questionString;
     TextView score;
     TextView completed;
+    Boolean clickable = true;
     Button next;
+    Boolean nextVisible = false;
     boolean secondTry = false;
     private SharedPreferences prefs;
 
@@ -46,7 +50,18 @@ public class QuizActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
 
+        currentImages.add("");
+        currentImages.add("");
+        currentImages.add("");
+        currentImages.add("");
+        buttonBackgrounds.add("white");
+        buttonBackgrounds.add("white");
+        buttonBackgrounds.add("white");
+        buttonBackgrounds.add("white");
+
+
         prefs = getPreferences(MODE_PRIVATE);
+
 
         //image420dab
         score = (TextView) findViewById(R.id.scoreNum);
@@ -59,7 +74,7 @@ public class QuizActivity extends AppCompatActivity {
         image4 = (ImageButton)findViewById(R.id.image4);
 
         defaultButtonBackground = image1.getBackground();
-                choices = new ArrayList<>();
+        choices = new ArrayList<>();
         choices.add(image1);
         choices.add(image2);
         choices.add(image3);
@@ -89,10 +104,24 @@ public class QuizActivity extends AppCompatActivity {
      * this method sets the next question page
      */
     private void setNextQuestion(){
+        //make next button invisible
+        this.next.setVisibility(View.INVISIBLE);
+        this.nextVisible=false;
+        //set clickables
+        for(ImageButton imgb : choices){
+            imgb.setClickable(true);
+        }
+        //reset background state appropriately
+        for(int i=0; i < buttonBackgrounds.size();i++){
+            buttonBackgrounds.set(i,"white");
+        }
         int questionNum = quiz.chooseQuestion();
         int questionId = getResources().getIdentifier("question"+questionNum, "string",
                 getPackageName());
         this.questionString.setText(getResources().getString(questionId));
+        this.score.setText(getResources().getString(R.string.score) + this.quiz.getScore());
+        Log.d("counters",quiz.getNumOfCorrectAnswers()+ " "+ quiz.getQuestionCounter()+" "+quiz.getScore());
+        this.completed.setText(getResources().getString(R.string.completed) +" "+ quiz.getQuestionCounter()+ " "+getResources().getString(R.string.total));
         setImages(questionNum);
     }
 
@@ -102,7 +131,6 @@ public class QuizActivity extends AppCompatActivity {
      * @param v
      */
     public void setNextQuestion(View v){
-        this.next.setVisibility(View.INVISIBLE);
         setNextQuestion();
     }
 
@@ -143,32 +171,14 @@ public class QuizActivity extends AppCompatActivity {
 
         Log.d("Setting", "Position " + pos);
         int imageId;
-        switch(question+""){
-            case "1":
-                imageId = getResources().getIdentifier("question"+question+"image", "drawable",
-                        getPackageName());
-                Log.d("Setting", question+ " 1");
-                choices.get(pos).setImageResource(imageId);
-                break;
-            case "2":
-                imageId = getResources().getIdentifier("question"+question+"image", "drawable",
-                        getPackageName());
-                choices.get(pos).setImageResource(imageId);
-                Log.d("Setting", question+ " 2");
-                break;
-            case "3":
-                imageId = getResources().getIdentifier("question"+question+"image", "drawable",
-                        getPackageName());
-                choices.get(pos).setImageResource(imageId);
-                Log.d("Setting", question+ " 3");
-                break;
-            case "4":
-                imageId = getResources().getIdentifier("question"+question+"image", "drawable",
-                        getPackageName());
-                choices.get(pos).setImageResource(imageId);
-                Log.d("Setting", question+ " 4");
-                break;
-        }
+
+        imageId = getResources().getIdentifier("question"+question+"image", "drawable",
+                getPackageName());
+        //save images and their positions to use in state
+        currentImages.set(pos,"question"+question+"image");
+        Log.d("Setting", question+ " 1");
+        choices.get(pos).setImageResource(imageId);
+
         int i =0;
         for(String p : positions){
             //reset background colors
@@ -176,6 +186,8 @@ public class QuizActivity extends AppCompatActivity {
                 choices.get(i).setBackground(this.defaultButtonBackground);
             }
             if (!(p.equals("set"))) {
+                //save images and their positions to use in state
+
                 //reset background colors
                 choices.get(Integer.parseInt(p)).setBackground(this.defaultButtonBackground);
                 Log.d("Setting", " Other Position " + p);
@@ -185,6 +197,7 @@ public class QuizActivity extends AppCompatActivity {
                 //pull its name from the available images array
                 String newPic = imagesToSet.get(rndPic);
                 imagesToSet.remove(newPic);
+                currentImages.set(Integer.parseInt(p),newPic);
                 Log.d("Setting", " Image Position " + rndPic);
                 //this allows me to get the drawable by only using its name
                 //this way I keep the code general instead of hardcoding the names of the images
@@ -232,9 +245,16 @@ public class QuizActivity extends AppCompatActivity {
             Log.d("AnswerCheck", "Right answer");
             quiz.addPoint();;
             quiz.addToQuestionCounter();
-            this.completed.setText(getResources().getString(R.string.completed) +" "+ quiz.getQuestionCounter());
+            //set image background for state
+            this.buttonBackgrounds.set(imgpos, "blue");
             img.setBackgroundColor(0xFF0000FF);
+            //set buttons unclickable
+            for(ImageButton imgb : choices){
+                imgb.setClickable(false);
+                this.clickable = false;
+            }
             this.next.setVisibility(View.VISIBLE);
+            this.nextVisible=true;
 
         }
         else{
@@ -242,11 +262,20 @@ public class QuizActivity extends AppCompatActivity {
                 quiz.addToQuestionCounter();
                 this.secondTry = false;
                 img.setImageResource(R.drawable.wrong);
-                this.completed.setText(getResources().getString(R.string.completed) +" "+ quiz.getQuestionCounter());
                 choices.get(this.rightAnswerPos).setBackgroundColor(0xFF0000FF);
+                //save state
+                this.buttonBackgrounds.set(this.rightAnswerPos, "blue");
+                this.currentImages.set(imgpos,"wrong");
                 this.next.setVisibility(View.VISIBLE);
+                this.nextVisible=true;
+                for(ImageButton imgb : choices){
+                    imgb.setClickable(false);
+                    this.clickable = false;
+                }
             }
             else{
+                //save state of wrong answer
+                this.currentImages.set(imgpos,"wrong");
                 img.setImageResource(R.drawable.wrong);
                 this.secondTry = true;
             }
@@ -284,5 +313,66 @@ public class QuizActivity extends AppCompatActivity {
         if (intent.resolveActivity(getPackageManager()) != null) {
             startActivity(intent);
         }
+    }
+    @Override
+    protected void onSaveInstanceState(Bundle savedInstanceState){
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putInt("numOfCorrectAnswers",this.quiz.getNumOfCorrectAnswers());
+        savedInstanceState.putInt("questionCounter",this.quiz.getQuestionCounter());
+        savedInstanceState.putInt("currentQuestion",this.quiz.getCurrentQuestion());
+        savedInstanceState.putInt("rightAnswerPos",this.rightAnswerPos);
+        savedInstanceState.putBoolean("secondTry",this.secondTry);
+        savedInstanceState.putBoolean("clickable",this.clickable);
+        savedInstanceState.putBoolean("nextVisible",this.nextVisible);
+        savedInstanceState.putStringArrayList("imagesToSet",this.imagesToSet);
+        savedInstanceState.putStringArrayList("buttonBackground",this.buttonBackgrounds);
+        savedInstanceState.putStringArrayList("questionNumbers",this.quiz.getQuestions());
+        savedInstanceState.putStringArrayList("currentImages",this.currentImages);
+    }
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState){
+        super.onRestoreInstanceState(savedInstanceState);
+        this.rightAnswerPos = savedInstanceState.getInt("rightAnswerPos");
+        this.quiz.setNumOfCorrectAnswers(savedInstanceState.getInt("numOfCorrectAnswers"));
+        this.secondTry = savedInstanceState.getBoolean("secondTry");
+        this.quiz.setQuestionCounter(savedInstanceState.getInt("questionCounter"));
+        this.quiz.setCurrentQuestion(savedInstanceState.getInt("currentQuestion"));
+        this.quiz.setQuestionNumbers(savedInstanceState.getStringArrayList("questionNumbers"));
+        this.imagesToSet = savedInstanceState.getStringArrayList("imagesToSet");
+        this.currentImages = savedInstanceState.getStringArrayList("currentImages");
+        this.buttonBackgrounds = savedInstanceState.getStringArrayList("buttonBackground");
+        this.clickable = savedInstanceState.getBoolean("clickable");
+        this.score.setText(getResources().getString(R.string.score) + this.quiz.getScore());
+        int questionId = getResources().getIdentifier("question"+this.quiz.getCurrentQuestion(), "string",
+                getPackageName());
+        this.score.setText(getResources().getString(R.string.score) + this.quiz.getScore());
+        this.questionString.setText(getResources().getString(questionId));
+        this.completed.setText(getResources().getString(R.string.completed) +" "+ quiz.getQuestionCounter()+ " "+getResources().getString(R.string.total));
+        restoreImages(this.currentImages,this.buttonBackgrounds);
+    }
+    private void restoreImages(ArrayList<String> currentImages,ArrayList<String> buttonBackgrounds){
+        int imageId =0;
+        Log.d("restoring",buttonBackgrounds.toString());
+        for(int i =0; i < choices.size(); i++){
+
+            imageId = getResources().getIdentifier(this.currentImages.get(i), "drawable",
+                    getPackageName());
+            this.choices.get(i).setImageResource(imageId);
+            if(this.buttonBackgrounds.get(i).equals("blue")){
+                this.choices.get(i).setBackgroundColor(0xFF0000FF);
+            }
+        }
+        //make sure to keep track of weither or not pics are clickable
+        if(this.clickable){
+            for(ImageButton imgb : choices){
+                imgb.setClickable(true);
+            }
+        }
+        else{
+            for(ImageButton imgb : choices){
+                imgb.setClickable(false);
+            }
+        }
+        Log.d("restoring",this.currentImages.toString());
     }
 }
