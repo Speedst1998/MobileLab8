@@ -1,9 +1,7 @@
 package cs.dawson.myapplication;
 
-
 import android.app.SearchManager;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -24,7 +22,6 @@ import java.util.Random;
 
 public class QuizActivity extends AppCompatActivity {
 
-
     ImageButton image1;
     ImageButton image2;
     ImageButton image3;
@@ -43,15 +40,11 @@ public class QuizActivity extends AppCompatActivity {
     Button next;
     Boolean nextVisible = false;
     boolean secondTry = false;
-    private SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
-
-
-
         currentImages.add("");
         currentImages.add("");
         currentImages.add("");
@@ -60,12 +53,6 @@ public class QuizActivity extends AppCompatActivity {
         buttonBackgrounds.add("white");
         buttonBackgrounds.add("white");
         buttonBackgrounds.add("white");
-
-
-
-        prefs = getPreferences(MODE_PRIVATE);
-
-
         //image420dab
         score = (TextView) findViewById(R.id.scoreNum);
         completed = (TextView) findViewById(R.id.completeQuestions);
@@ -94,37 +81,12 @@ public class QuizActivity extends AppCompatActivity {
         Log.d("Cycle","CREATE IN PROGRESS");
         //Here I randomly choose the question to display
         quiz = new Quiz(generateQuestions());
-
-        Log.i("SHPREFS", "onCreate CurrentQuestion: " + prefs.getInt("CurrentQuestion",0));
-        Log.i("SHPREFS", "onCreate QuestionCounter: " + prefs.getInt("QuestionCounter",0));
-        Log.i("SHPREFS", "onCreate NumOfCorrectAnswers: " + prefs.getInt("NumOfCorrectAnswers",0));
-
         setNextQuestion();
-
 
         Log.d("Cycle","CREATE DONE");
 
 
     }
-
-    @Override
-    protected void onPause(){
-        super.onPause();
-        setContentView(R.layout.activity_quiz);
-
-        prefs = getPreferences(MODE_PRIVATE);
-
-        SharedPreferences.Editor editor = prefs.edit();
-
-        editor.putInt("CurrentQuestion",this.quiz.getCurrentQuestion());
-        Log.d("SHPREFS", "onPause CurrentQuestion: " + prefs.getInt("CurrentQuestion",0));
-        editor.putInt("QuestionCounter",this.quiz.getQuestionCounter());
-        Log.d("SHPREFS", "onPause QuestionCounter: " + prefs.getInt("QuestionCounter",0));
-        editor.putInt("NumOfCorrectAnswers",this.quiz.getNumOfCorrectAnswers());
-        Log.i("SHPREFS", "onPause NumOfCorrectAnswers: " + prefs.getInt("NumOfCorrectAnswers",0));
-        editor.commit();
-    }
-
 
     /**
      * this method sets the next question page
@@ -194,7 +156,6 @@ public class QuizActivity extends AppCompatActivity {
         Log.d("Setting", "Position before setting in images to set array " + pos);
         //remove image from array so its not reused
         imagesToSet.remove("question"+question+"image");
-
         Log.d("Setting", "Position " + pos);
         int imageId;
 
@@ -255,8 +216,6 @@ public class QuizActivity extends AppCompatActivity {
 
 
     public void checkAnswer(View v){
-        //Save the values
-        //SharedPreferences.Editor editor = prefs.edit();
         //Get the object that is concerned by the event
         ImageButton img = (ImageButton) v;
         //get the id of the imagebutton (the one from the layout)
@@ -307,38 +266,6 @@ public class QuizActivity extends AppCompatActivity {
             }
 
         }
-
-
-        //editor.commit();
-
-    }
-
-    public void showHint(View view) {
-        String query = getResources().getString(R.string.road_sign)+" ";
-
-        switch(quiz.getCurrentQuestion()){
-            case 1:
-                query += getResources().getString(R.string.question1);
-                break;
-            case 2:
-                query += getResources().getString(R.string.question2);
-                break;
-            case 3:
-                query += getResources().getString(R.string.question3);
-                break;
-            case 4:
-                query += getResources().getString(R.string.question4);
-                break;
-        }
-
-        Log.i("hint","Description to search: "+ query);
-        Log.d("hint","The returning question number : "+ quiz.getCurrentQuestion());
-        Intent intent = new Intent(Intent.ACTION_WEB_SEARCH);
-        intent.putExtra(SearchManager.QUERY, query);
-        query="";
-        if (intent.resolveActivity(getPackageManager()) != null) {
-            startActivity(intent);
-        }
     }
     @Override
     protected void onSaveInstanceState(Bundle savedInstanceState){
@@ -374,6 +301,7 @@ public class QuizActivity extends AppCompatActivity {
         this.score.setText(getResources().getString(R.string.score) + this.quiz.getScore());
         this.questionString.setText(getResources().getString(questionId));
         this.completed.setText(getResources().getString(R.string.completed) +" "+ quiz.getQuestionCounter()+ " "+getResources().getString(R.string.total));
+        this.nextVisible = savedInstanceState.getBoolean("nextVisible");
         restoreImages(this.currentImages,this.buttonBackgrounds);
     }
     private void restoreImages(ArrayList<String> currentImages,ArrayList<String> buttonBackgrounds){
@@ -399,6 +327,41 @@ public class QuizActivity extends AppCompatActivity {
                 imgb.setClickable(false);
             }
         }
+        if(this.nextVisible){
+            this.next.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            this.next.setVisibility(View.INVISIBLE);
+        }
         Log.d("restoring",this.currentImages.toString());
+    }
+
+    public void showHint(View view) {
+        String query = getResources().getString(R.string.road_sign)+" ";
+
+        switch(quiz.getCurrentQuestion()){
+            case 1:
+                query += getResources().getString(R.string.question1);
+                break;
+            case 2:
+                query += getResources().getString(R.string.question2);
+                break;
+            case 3:
+                query += getResources().getString(R.string.question3);
+                break;
+            case 4:
+                query += getResources().getString(R.string.question4);
+                break;
+        }
+
+        Log.i("hint","Description to search: "+ query);
+        Log.d("hint","The returning question number : "+ quiz.getCurrentQuestion());
+        Intent intent = new Intent(Intent.ACTION_WEB_SEARCH);
+        intent.putExtra(SearchManager.QUERY, query);
+        query="";
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
     }
 }
