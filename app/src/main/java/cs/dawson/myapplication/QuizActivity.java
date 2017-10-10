@@ -45,8 +45,6 @@ public class QuizActivity extends AppCompatActivity {
     Boolean nextVisible = false;
     boolean secondTry = false;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,16 +79,19 @@ public class QuizActivity extends AppCompatActivity {
         //Here i represent the images i need to set in an array
         imagesToSet = new ArrayList<String>();
         Log.d("Cycle","Before shared Prefs");
-        restorePrefs(prefs);
+        if(prefs != null){
+            restorePrefs(prefs);
+        }
+
         Log.d("Cycle","After shared Prefs");
         populateImageArray(imagesToSet);
 
 
         Log.d("Cycle","CREATE IN PROGRESS");
         //Here I randomly choose the question to display
-
+        Log.d("Question", "Logging generate Questions" + generateQuestions());
         quiz = new Quiz(generateQuestions());
-        //restoreQuiz(prefs);
+        restoreQuiz(prefs);
         setNextQuestion();
 
         Log.d("Cycle","CREATE DONE");
@@ -100,7 +101,6 @@ public class QuizActivity extends AppCompatActivity {
     protected void onPause(){
         super.onPause();
         savePreferences();
-
     }
 
     public void restoreQuiz(SharedPreferences prefs){
@@ -115,15 +115,24 @@ public class QuizActivity extends AppCompatActivity {
 
         //Retrieve the question number
 
-        set = prefs.getStringSet("questionNumbers", new HashSet<String>());
+        ArrayList<String> list = new ArrayList<String>();
+        list.addAll(generateQuestions());
+        
+        Set<String> set1 = new HashSet<String>();
+        set1.addAll(list);
+
+
+
+        set = prefs.getStringSet("questionNumbers",set1);
         strings.addAll(set);
         this.quiz.setQuestionNumbers(strings);
 
+        Log.d("QuestionCounter", "This is the question counter number in restoreQuiz : " + this.quiz.getQuestionCounter() );
     }
 
     public void restorePrefs(SharedPreferences prefs){
         ArrayList strings = new ArrayList<String>();
-        Set<String> set;
+        Set<String> set1, set2, set3;
 
         Log.i("PREFS","BEFORE Right answer position: "+ this.rightAnswerPos);
         this.rightAnswerPos = prefs.getInt("rightAnswerPos", 0);
@@ -134,16 +143,34 @@ public class QuizActivity extends AppCompatActivity {
 
 
         //Retrieve the images to set
-        set = prefs.getStringSet("imagesToSet", new HashSet<String>());
-        this.imagesToSet.addAll(set);
+        set1 = prefs.getStringSet("imagesToSet", new HashSet<String>());
+        this.imagesToSet.addAll(set1);
 
         //Retrieve the currentImages
-        set = prefs.getStringSet("currentImages", new HashSet<String>());
-        this.currentImages.addAll(set);
+        ArrayList<String> list = new ArrayList<String>();
+        list.add("");
+        list.add("");
+        list.add("");
+        list.add("");
+
+        Set<String> setEmpty = new HashSet<String>();
+        setEmpty.addAll(list);
+
+        set2 = prefs.getStringSet("currentImages", setEmpty);
+        this.currentImages.addAll(set2);
 
         //Retrieve the button backgrounds
-        set = prefs.getStringSet("buttonBackground", new HashSet<String>());
-        this.buttonBackgrounds.addAll(set);
+
+        ArrayList<String> listBackground = new ArrayList<String>();
+        list.add("white");
+        list.add("white");
+        list.add("white");
+        list.add("white");
+
+        Set<String> setBackground = new HashSet<String>();
+        setBackground.addAll(listBackground);
+        set3 = prefs.getStringSet("buttonBackground", setBackground);
+        this.buttonBackgrounds.addAll(set3);
 
 
         this.clickable = prefs.getBoolean("clickable", true);
@@ -167,6 +194,7 @@ public class QuizActivity extends AppCompatActivity {
         int questionNum = quiz.chooseQuestion();
         int questionId = getResources().getIdentifier("question"+questionNum, "string",
                 getPackageName());
+        Log.d("questionNum", "Question num is :" + questionNum);
         this.questionString.setText(getResources().getString(questionId));
         this.score.setText(getResources().getString(R.string.score) + this.quiz.getScore());
         Log.d("counters",quiz.getNumOfCorrectAnswers()+ " "+ quiz.getQuestionCounter()+" "+quiz.getScore());
@@ -277,6 +305,7 @@ public class QuizActivity extends AppCompatActivity {
 
 
     public void checkAnswer(View v){
+        Log.d("QuestionCounter", "This is the question counter number in check answers : " + this.quiz.getQuestionCounter());
         //Get the object that is concerned by the event
         ImageButton img = (ImageButton) v;
         //get the id of the imagebutton (the one from the layout)
@@ -451,28 +480,36 @@ public class QuizActivity extends AppCompatActivity {
         editor.putBoolean("clickable",this.clickable);
         editor.putBoolean("nextVisible",this.nextVisible);
 
+
+        Set<String> set1 = new HashSet<String>();
+        Set<String> set2 = new HashSet<String>();
+        Set<String> set3 = new HashSet<String>();
+        Set<String> set4 = new HashSet<String>();
         //Save the images to be set
-        Set<String> set = new HashSet<String>();
-        set.addAll(this.imagesToSet);
-        editor.putStringSet("imagesToSet", set);
+
+        set1.addAll(this.imagesToSet);
+        editor.putStringSet("imagesToSet", set1);
 
         //editor.putStringArrayList("imagesToSet",this.imagesToSet);
 
         //Save the button backgrounds to be set
-        set.addAll(this.buttonBackgrounds);
-        editor.putStringSet("buttonBackground", set);
+
+        set2.addAll(this.buttonBackgrounds);
+        editor.putStringSet("buttonBackground", set2);
 
         //editor.putStringArrayList("buttonBackground",this.buttonBackgrounds);
-
+        Log.d("Questionss", "Get questions returns" + this.quiz.getQuestions());
         //Save the question numbers to be set
-        set.addAll(this.quiz.getQuestions());
-        editor.putStringSet("questionNumbers", set);
+
+        set3.addAll(this.quiz.getQuestions());
+        editor.putStringSet("questionNumbers", set3);
 
         //editor.putStringArrayList("questionNumbers",this.quiz.getQuestions());
 
         //Save the current images to be set
-        set.addAll(this.currentImages);
-        editor.putStringSet("currentImages", set);
+
+        set4.addAll(this.currentImages);
+        editor.putStringSet("currentImages", set4);
 
         //editor.putStringArrayList("currentImages",this.currentImages);
         editor.commit();

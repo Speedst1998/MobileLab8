@@ -34,14 +34,14 @@ public class Quiz {
 
         boolean notFound = true;
         int questionNum = 0;
-        Log.d("Questions",questionNumbers.toString() );
+        Log.d("Questions","At beginning" + questionNumbers.toString() );
 
         while(notFound) {
-
+            Log.d("Quest", "This is the size " + this.questionNumbers.size());
             questionNum = new Random().nextInt(this.questionNumbers.size()) + 1 ;
             Log.d("Questions",questionNum+"");
             if(!(questionNumbers.get(questionNum-1).equals("answered"))) {
-                Log.d("Questions",questionNumbers.toString() );
+                Log.d("Questions","In if loop " +questionNumbers.toString() );
                 notFound = false;
                 questionNumbers.set(questionNum-1, "answered");
             }
