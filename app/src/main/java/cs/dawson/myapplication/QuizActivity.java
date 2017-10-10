@@ -117,7 +117,7 @@ public class QuizActivity extends AppCompatActivity {
 
         ArrayList<String> list = new ArrayList<String>();
         list.addAll(generateQuestions());
-        
+
         Set<String> set1 = new HashSet<String>();
         set1.addAll(list);
 
@@ -125,6 +125,7 @@ public class QuizActivity extends AppCompatActivity {
 
         set = prefs.getStringSet("questionNumbers",set1);
         strings.addAll(set);
+        Log.d("strings", "Here is the strings array" + strings.toString());
         this.quiz.setQuestionNumbers(strings);
 
         Log.d("QuestionCounter", "This is the question counter number in restoreQuiz : " + this.quiz.getQuestionCounter() );
@@ -500,9 +501,12 @@ public class QuizActivity extends AppCompatActivity {
         //editor.putStringArrayList("buttonBackground",this.buttonBackgrounds);
         Log.d("Questionss", "Get questions returns" + this.quiz.getQuestions());
         //Save the question numbers to be set
-
+        Log.d("arrayset","This is the getQuestions method" + this.quiz.getQuestions());
+        //foreach that runs through this.quiz.getQuestions and add to set3 separately
         set3.addAll(this.quiz.getQuestions());
         editor.putStringSet("questionNumbers", set3);
+
+        Log.d("arrayset","This is the set3 var"+set3.toString());
 
         //editor.putStringArrayList("questionNumbers",this.quiz.getQuestions());
 
