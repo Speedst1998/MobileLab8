@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">MesureDeForceArrachageApp</string>
+    <string name="launch">Lancer!</string>
+    <string name="stop">Arrêter!</string>
+    <string name="Id">Identité</string>
+    <string name="Comment">Commentaire</string>
+    <string name="force">Force(N)</string>
+    <string name="save">Sauvegarder</string>
+    <string name="transfer">Transfere USB</string>
+
+</resources>

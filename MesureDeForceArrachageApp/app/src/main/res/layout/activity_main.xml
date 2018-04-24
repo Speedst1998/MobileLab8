@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.mtaha.testbluetoothrasppi3.com.univlyon1.mtaha.mesuredeforcearrachageapp.MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width='0dp'
+                android:layout_height="match_parent"
+                android:layout_weight='1'
+                android:background="@color/colorPrimary"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/btResult"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Hello World!" />
+
+
+                <Button
+                    android:id="@+id/lightOn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/launch" />
+
+                <Button
+                    android:id="@+id/lightOff"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/stop" />
+
+                <Button
+                    android:id="@+id/transferButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/transfer" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width='0dp'
+                android:layout_height="match_parent"
+                android:layout_weight='2'
+                android:weightSum="5"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/measureLabel"
+                    android:gravity="center"
+                    android:textSize="50dp"
+                    android:fontFamily="casual"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:autoSizeTextType="uniform"
+                    android:text="@string/force"/>
+                <TextView
+                    android:id="@+id/measure"
+                    android:gravity="center"
+                    android:textSize="50dp"
+                    android:fontFamily="casual"
+                    android:layout_width="match_parent"
+                    android:layout_height="15dp"
+                    android:layout_weight="2"
+                    android:autoSizeTextType="uniform"
+                    android:text="0.0" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width='0dp'
+                android:layout_height="300dp"
+                android:layout_marginBottom="0dp"
+                android:layout_marginTop="0dp"
+                android:layout_weight='2'
+                android:orientation="vertical"
+                android:weightSum="100">
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="10"
+                    android:autoSizeTextType="uniform"
+                    android:text="@string/Id"
+                    android:layout_margin="7dp"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="15"
+                    android:autoSizeTextType="uniform"
+                    android:background="@drawable/edit_text_border"
+                    android:text="@string/Id"
+                    android:layout_margin="7dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="10"
+                    android:autoSizeTextType="uniform"
+                    android:text="@string/Comment"
+                    android:layout_margin="7dp"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="50"
+                    android:background="@drawable/edit_text_border"
+                    android:autoSizeTextType="uniform"
+                    android:text="@string/Comment"
+                    android:layout_margin="7dp"/>
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/save"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/chart"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+
+</RelativeLayout>
